@@ -1,0 +1,226 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+body {
+  background: #102217;
+  color: white;
+}
+
+/* Page */
+.profile-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background: #102217;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Bar */
+.top-bar {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+}
+
+.top-bar h2 {
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+}
+
+.back-icon {
+  cursor: pointer;
+}
+
+/* Indicators */
+.page-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 0;
+}
+
+.dot {
+  height: 8px;
+  border-radius: 20px;
+  background: rgba(46, 238, 121, 0.3);
+}
+
+.dot.inactive {
+  width: 8px;
+}
+
+.dot.active {
+  width: 32px;
+  background: #2bee79;
+}
+
+/* Headings */
+.title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #94a3b8;
+  padding: 0 24px;
+  margin-top: 8px;
+}
+
+/* Photo Section */
+.photo-section {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.photo-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 2px dashed rgba(46, 238, 121, 0.4);
+  background: rgba(46, 238, 121, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-icon {
+  font-size: 48px;
+  color: #2bee79;
+}
+
+.photo-add {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: #2bee79;
+  color: #102217;
+  padding: 8px;
+  border-radius: 50%;
+  border: 4px solid #102217;
+}
+
+.photo-text {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.photo-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.photo-subtitle {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* Bio */
+.bio-section {
+  padding: 24px;
+}
+
+.bio-section label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.bio-wrapper {
+  position: relative;
+  margin-top: 8px;
+}
+
+.bio-wrapper textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  resize: none;
+}
+
+.char-count {
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* Actions */
+.actions {
+  margin-top: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.primary-btn {
+  background: #2bee79;
+  color: #102217;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.secondary-btn {
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.secondary-btn:hover {
+  color: white;
+}
+
+/* iOS Indicator */
+.ios-indicator {
+  width: 120px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  margin: 8px auto 12px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .title {
+    font-size: 24px;
+  }
+}

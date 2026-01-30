@@ -1,0 +1,170 @@
+/* ===========================
+   Contacts Page CSS
+   =========================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
+
+:root {
+  --bg: #102217;
+  --surface: #121b26;
+  --border: rgba(255,255,255,0.12);
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.65);
+  --primary: #2bee79;
+  --radius: 16px;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+body {
+  background: radial-gradient(1200px 600px at 50% -20%, rgba(43, 238, 121, 0.20), transparent 65%),
+    var(--bg);
+  color: var(--text);
+}
+
+/* Container */
+.contacts-page {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 18px 0 26px;
+}
+
+/* Card */
+.contacts-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+
+/* Title */
+.page-title {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;;
+  margin-bottom: 20px;
+  align-items: center;
+  gap: 10px;
+  color: #121b26;
+}
+
+.page-title h1 {
+  font-size: 32px;
+  font-weight: 700;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* Search Input */
+.label {
+  font-size: 16px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  outline: none;
+  font-size: 14px;
+}
+
+.input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(43, 238, 121, 0.16);
+}
+
+/* User list */
+.contacts-user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contacts-user:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.username {
+  font-weight: 700;
+}
+
+.email {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.btn-primary {
+  background: var(--primary);
+  border: none;
+  color: #102217;
+}
+
+.btn-primary:hover {
+  filter: brightness(0.95);
+}
+
+/* Status text */
+.muted {
+  color: var(--muted);
+}
+
+.contacts-empty {
+  color: var(--muted);
+  font-size: 16px;
+  padding: 10px 0;
+  background-color: transparent;
+  text-align: center;
+  display: block;
+  box-shadow: none;
+}
+
+.no-contacts{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    color: var(--muted);
+}

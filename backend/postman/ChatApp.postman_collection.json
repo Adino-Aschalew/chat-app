@@ -1,0 +1,113 @@
+{
+  "info": {
+    "name": "ChatApp API",
+    "_postman_id": "00000000-0000-0000-0000-000000000000",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"alice\",\n  \"email\": \"alice@example.com\",\n  \"password\": \"Password123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"Password123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Auth - Me",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api", "auth", "me"] }
+      }
+    },
+    {
+      "name": "Users - Search",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/users?q=al",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users"],
+          "query": [{ "key": "q", "value": "al" }]
+        }
+      }
+    },
+    {
+      "name": "Chats - List",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "{{baseUrl}}/api/chats", "host": ["{{baseUrl}}"], "path": ["api", "chats"] }
+      }
+    },
+    {
+      "name": "Chats - Create Private",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/chats", "host": ["{{baseUrl}}"], "path": ["api", "chats"] },
+        "body": { "mode": "raw", "raw": "{\n  \"userId\": 2\n}" }
+      }
+    },
+    {
+      "name": "Chats - Create Group",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/chats/group", "host": ["{{baseUrl}}"], "path": ["api", "chats", "group"] },
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Friends\",\n  \"memberIds\": [2,3]\n}" }
+      }
+    },
+    {
+      "name": "Messages - List (pagination)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/chats/1/messages?limit=30",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "chats", "1", "messages"],
+          "query": [{ "key": "limit", "value": "30" }]
+        }
+      }
+    },
+    {
+      "name": "Messages - Send (text)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "{{baseUrl}}/api/chats/1/messages", "host": ["{{baseUrl}}"], "path": ["api", "chats", "1", "messages"] },
+        "body": { "mode": "formdata", "formdata": [{ "key": "text", "value": "Hello!", "type": "text" }] }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000" },
+    { "key": "token", "value": "" }
+  ]
+}
+

@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
+
+* { box-sizing: border-box }
+
+.chat-screen {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg,#2266b3 0%, #88c2f8 40%);
+  color: var(--text);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* HEADER */
+.chat-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 8px;
+  gap: 10px;
+  background: transparent;
+}
+
+.icon-btn { 
+  width:38px; 
+  height:38px; 
+  border-radius:10px;
+   border:none; 
+   color:black;
+    display:inline-flex;
+     align-items:center; 
+     justify-content:center 
+    }
+
+.chat-user {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex: 1;
+}
+
+.chat-avatar { width:44px; height:44px;
+   border-radius:50%; background-size:cover;
+    background-position:center }
+
+.chat-user-info h2 { margin:0; font-size:15px; font-weight:600 }
+.chat-user-info p { margin:0; font-size:13px; color:var(--muted); display:flex; align-items:center; gap:6px }
+
+.typing-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); animation:pulse 1.2s infinite }
+
+@keyframes pulse {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* MESSAGE AREA */
+.message-area { padding:12px; overflow:auto; flex:1; padding-bottom:84px }
+
+.date-separator { text-align:center; font-size:12px; padding:6px 12px; background:var(--panel); border-radius:999px; color:var(--muted); margin:12px 0 }
+
+/* Chat bubble */
+.chat-bubble {
+   display:flex;
+   gap:10px;
+   margin-bottom:12px; 
+    max-width:85% 
+    }
+.chat-bubble.received {
+   align-items:flex-end
+   }
+.chat-bubble.sent {
+   margin-left:auto; 
+   justify-content:flex-end;
+   text-wrap:break-word;
+   }
+
+.bubble-avatar {
+   width:34px; 
+   height:34px;
+    border-radius:50%;
+     background-size:cover
+     }
+
+.bubble-content {
+   display:flex;
+    flex-direction:column; 
+    gap:6px }
+
+.bubble-text { 
+  padding:10px 14px; 
+  border-radius:16px;
+   background:var(--panel);
+    color:var(--text);
+     font-size:14px; 
+    line-height:1.4 }
+.chat-bubble.sent .bubble-text {
+   background:var(--sent-bg); 
+   color:var(--text)
+   }
+
+.bubble-image { width:100%; height:180px; border-radius:12px; background-size:cover; background-position:center; border:1px solid rgba(0,0,0,0.06) }
+
+.bubble-meta { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--muted) }
+.seen { color:var(--accent) }
+
+/* INPUT AREA */
+.chat-input { padding:12px; display:flex; align-items:center; gap:10px; border-top:1px solid rgba(0,0,0,0.04); background:transparent }
+
+.left-actions { display:flex; gap:8px }
+
+.input-wrap { flex:1; position:relative }
+.input-wrap input { width:100%; padding:10px 14px; border-radius:999px; border:1px solid rgba(0,0,0,0.06); background:var(--panel); color:var(--text); outline:none }
+
+
+.emoji-btn { position:absolute; right:10px; top:50%; transform:translateY(-50%); border:none; background:transparent; color:var(--muted) }
+
+.send-btn { width:40px; height:40px; border-radius:50%; border:none; background:var(--accent); color:white }
+
+/* Utilities */
+.btn { border: none; background: transparent; color: var(--accent-600); padding:8px 10px; border-radius:8px; cursor:pointer }
+.muted { color: var(--muted) }
+
+.chat-previews { padding:8px; display:flex; gap:8px; align-items:center }
+.preview { display:flex; flex-direction:column; gap:6px; align-items:center }
+.preview img, .preview video { width:96px; height:64px; object-fit:cover; border-radius:8px }
+
+.reaction-pill { background:var(--panel); padding:6px 8px; border-radius:999px; margin-right:6px; font-size:13px }
+.reaction-btn { border:none; background:transparent; cursor:pointer; padding:6px; border-radius:8px }
+
+.load-more { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); background:var(--panel); color:var(--accent-600); cursor:pointer }
