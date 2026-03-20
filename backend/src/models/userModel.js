@@ -75,6 +75,19 @@ async function getUserSettings(userId) {
   return rows[0] || null
 }
 
+async function getAllUsers(excludeUserId = null) {
+  const whereClause = excludeUserId ? 'WHERE id <> ?' : ''
+  const params = excludeUserId ? [excludeUserId] : []
+  
+  return query(
+    `SELECT id, username, email, status, profile_photo, is_online, last_seen_at, created_at
+     FROM users
+     ${whereClause}
+     ORDER BY username ASC`,
+    params
+  )
+}
+
 module.exports = {
   findUserByEmail,
   findUserById,
@@ -83,6 +96,7 @@ module.exports = {
   updateProfile,
   updateSettings,
   searchUsers,
+  getAllUsers,
   getUserSettings,
 }
 

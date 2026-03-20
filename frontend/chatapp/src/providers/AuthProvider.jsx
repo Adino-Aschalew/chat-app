@@ -44,11 +44,14 @@ export function AuthProvider({ children }) {
   }
 
   const register = async ({ username, email, password }) => {
-    const res = await api.post('/api/auth/register', { username, email, password })
+    console.log('AuthProvider - Registering user:', { username, email })
+    const res = await api.post('/api/users/register', { username, email, password })
+    console.log('AuthProvider - Registration response:', res.data)
     const t = res.data.token
     localStorage.setItem('token', t)
     setToken(t)
     setMe(res.data.user)
+    console.log('AuthProvider - User set after registration:', res.data.user)
   }
 
   const logout = () => {
@@ -77,6 +80,15 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   const ctx = useContext(AuthContext)
   if (!ctx) throw new Error('useAuth must be used within AuthProvider')
+  
+  // Debug: log current auth state
+  console.log('useAuth - Current auth state:', {
+    token: ctx.token ? 'exists' : 'none',
+    me: ctx.me ? 'exists' : 'none',
+    isAuthed: ctx.isAuthed,
+    loading: ctx.loading
+  })
+  
   return ctx
 }
 

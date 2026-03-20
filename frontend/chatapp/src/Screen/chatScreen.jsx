@@ -4,7 +4,7 @@ function Icon({ name }) {
   return <span className="material-symbols-rounded">{name}</span>
 }
 
-export function ChatScreen({ chat, onBack, onShowRightPanel }) {
+export function ChatScreen({ chat, onBack, onShowRightPanel, onMessageSent }) {
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([
     {
@@ -59,6 +59,16 @@ export function ChatScreen({ chat, onBack, onShowRightPanel }) {
         status: 'sent'
       }
       setMessages([...messages, newMessage])
+      
+      // Update chat list with latest message
+      if (onMessageSent) {
+        onMessageSent({
+          chatId: chat.id,
+          lastMessage: message,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        })
+      }
+      
       setMessage('')
       
       // Simulate typing indicator and response
@@ -73,6 +83,15 @@ export function ChatScreen({ chat, onBack, onShowRightPanel }) {
           status: 'delivered'
         }
         setMessages(prev => [...prev, response])
+        
+        // Update chat list with response message
+        if (onMessageSent) {
+          onMessageSent({
+            chatId: chat.id,
+            lastMessage: 'That sounds amazing! Keep up the great work!',
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          })
+        }
       }, 3000)
     }
   }

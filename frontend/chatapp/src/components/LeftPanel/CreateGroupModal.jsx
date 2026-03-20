@@ -4,7 +4,7 @@ function Icon({ name }) {
   return <span className="material-symbols-rounded">{name}</span>
 }
 
-export function CreateGroupModal({ onClose }) {
+export function CreateGroupModal({ onClose, onCreateGroup }) {
   const [groupName, setGroupName] = useState('')
   const [groupDescription, setGroupDescription] = useState('')
   const [selectedMembers, setSelectedMembers] = useState([])
@@ -40,13 +40,13 @@ export function CreateGroupModal({ onClose }) {
 
   const handleCreateGroup = () => {
     if (groupName.trim() && selectedMembers.length > 0) {
-      console.log('Creating group:', {
+      const groupData = {
         name: groupName,
         description: groupDescription,
         members: selectedMembers,
         image: groupImage
-      })
-      onClose()
+      }
+      onCreateGroup(groupData)
     }
   }
 

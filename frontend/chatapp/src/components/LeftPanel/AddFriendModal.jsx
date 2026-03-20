@@ -4,7 +4,7 @@ function Icon({ name }) {
   return <span className="material-symbols-rounded">{name}</span>
 }
 
-export function AddFriendModal({ onClose }) {
+export function AddFriendModal({ onClose, onAddFriend }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeTab, setActiveTab] = useState('search')
 
@@ -23,9 +23,13 @@ export function AddFriendModal({ onClose }) {
       )
     : []
 
-  const handleAddFriend = (userId) => {
-    console.log('Adding friend:', userId)
-    // In a real app, this would make an API call
+  const handleAddFriend = (userData) => {
+    const friendData = {
+      name: userData.name,
+      username: userData.username.replace('@', ''),
+      avatar: userData.avatar
+    }
+    onAddFriend(friendData)
   }
 
   return (
@@ -79,7 +83,7 @@ export function AddFriendModal({ onClose }) {
                         </div>
                         <button 
                           className="add-btn"
-                          onClick={() => handleAddFriend(user.id)}
+                          onClick={() => handleAddFriend(user)}
                         >
                           <Icon name="person_add" />
                           Add
@@ -115,7 +119,7 @@ export function AddFriendModal({ onClose }) {
                     </div>
                     <button 
                       className="add-btn"
-                      onClick={() => handleAddFriend(user.id)}
+                      onClick={() => handleAddFriend(user)}
                     >
                       <Icon name="person_add" />
                       Add

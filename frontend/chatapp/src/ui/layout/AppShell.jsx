@@ -20,6 +20,9 @@ export function AppShell() {
   const [fabOpen, setFabOpen] = useState(false)
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false)
   const [showAddFriendModal, setShowAddFriendModal] = useState(false)
+  const [activeTab, setActiveTab] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [chats, setChats] = useState([])
 
   const handleChatSelect = (chat) => {
     setSelectedChat(chat)
@@ -36,16 +39,73 @@ export function AppShell() {
     setFabOpen(!fabOpen)
   }
 
-  const handleCreateGroup = () => {
+  const handleCreateGroup = (groupData) => {
+    // Add new group to chats list
+    const newGroup = {
+      id: Date.now(), // temporary ID
+      name: groupData.name,
+      username: null,
+      avatar: groupData.image || `https://picsum.photos/seed/${groupData.name}/100/100`,
+      lastMessage: 'Group created',
+      time: 'Just now',
+      unread: 0,
+      online: false,
+      status: 'group',
+      isGroup: true,
+      members: groupData.members || []
+    }
+    setChats(prev => [newGroup, ...prev])
+    setShowCreateGroupModal(false)
+  }
+
+  const handleCreateGroupClick = () => {
     console.log('Create group clicked')
     setFabOpen(false)
     setShowCreateGroupModal(true)
+  }
+
+  const handleAddFriendToList = (friendData) => {
+    // Add new friend to chats list
+    const newFriend = {
+      id: Date.now(), // temporary ID
+      name: friendData.name,
+      username: friendData.username,
+      avatar: friendData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(friendData.name)}&background=random`,
+      lastMessage: 'Just added as friend',
+      time: 'Just now',
+      unread: 0,
+      online: false, // Default to offline until backend updates
+      status: 'offline', // Default to offline
+      isGroup: false
+    }
+    setChats(prev => [newFriend, ...prev])
+    setShowAddFriendModal(false)
+  }
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value)
   }
 
   const handleAddFriend = () => {
     console.log('Add friend clicked')
     setFabOpen(false)
     setShowAddFriendModal(true)
+    // New code here
+    console.log('New code executed')
+  }
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab)
+    setSelectedChat(null)
+  }
+
+  const handleMessageSent = ({ chatId, lastMessage, time }) => {
+    // Update the chat list with the new message
+    setChats(prev => prev.map(chat => 
+      chat.id === chatId 
+        ? { ...chat, lastMessage, time, unread: chat.unread + 1 }
+        : chat
+    ))
   }
 
   return (
@@ -59,37 +119,41 @@ export function AppShell() {
               <input 
                 type="text" 
                 placeholder="Search or start new chat..." 
-                onChange={(e) => console.log(e.target.value)}
+                value={searchQuery}
+                onChange={handleSearchChange}
               />
             </div>
           </div>
 
           <div className="tabs">
-            <NavLink 
-              to="/home" 
-              className={({ isActive }) => isActive ? 'tab-item tab-item-active' : 'tab-item'}
-              onClick={() => setSelectedChat(null)}
+            <button 
+              className={`tab-item ${activeTab === 'all' ? 'active' : ''}`}
+              onClick={() => handleTabClick('all')}
             >
               ALL
-            </NavLink>
-            <NavLink 
-              to="/home" 
-              className={({ isActive }) => isActive ? 'tab-item tab-item-active' : 'tab-item'}
-              onClick={() => setSelectedChat(null)}
+            </button>
+            <button 
+              className={`tab-item ${activeTab === 'unread' ? 'active' : ''}`}
+              onClick={() => handleTabClick('unread')}
             >
               UNREAD
               <span className="unread-badge">3</span>
-            </NavLink>
-            <NavLink 
-              to="/home" 
-              className={({ isActive }) => isActive ? 'tab-item tab-item-active' : 'tab-item'}
-              onClick={() => setSelectedChat(null)}
+            </button>
+            <button 
+              className={`tab-item ${activeTab === 'groups' ? 'active' : ''}`}
+              onClick={() => handleTabClick('groups')}
             >
               GROUPS
-            </NavLink>
+            </button>
           </div>
 
-          <ChatList onSelectChat={handleChatSelect} />
+          <ChatList 
+            onSelectChat={handleChatSelect} 
+            activeTab={activeTab} 
+            searchQuery={searchQuery}
+            chats={chats}
+            setChats={setChats}
+          />
         </aside>
 
         {/* CENTER PANEL (50%) */}
@@ -99,6 +163,7 @@ export function AppShell() {
               chat={selectedChat} 
               onBack={handleBack} 
               onShowRightPanel={() => setShowRightPanel(true)}
+              onMessageSent={handleMessageSent}
             />
           ) : (
             <div className="empty-state">
@@ -123,7 +188,7 @@ export function AppShell() {
             <div className="profile-info">
               <div className="profile-image">
                 <img 
-                  src={user?.photo || 'https://via.placeholder.com/40'} 
+                  src={user?.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&background=random&size=40`} 
                   alt={user?.name || 'Profile'}
                   className="avatar"
                 />
@@ -136,7 +201,7 @@ export function AppShell() {
           </div>
 
           {selectedChat ? (
-            <FriendProfile user={selectedChat.user} />
+            <FriendProfile user={selectedChat} />
           ) : (
             <UserProfile />
           )}
@@ -148,7 +213,7 @@ export function AppShell() {
             <Icon name="add" />
           </button>
           <div className={`fab-options ${fabOpen ? 'active' : ''}`}>
-            <button className="fab-option" onClick={handleCreateGroup}>
+            <button className="fab-option" onClick={handleCreateGroupClick}>
               <Icon name="group" />
               <span className="fab-label">Create Group</span>
             </button>
@@ -161,10 +226,16 @@ export function AppShell() {
 
         {/* FAB MODALS */}
         {showCreateGroupModal && (
-          <CreateGroupModal onClose={() => setShowCreateGroupModal(false)} />
+          <CreateGroupModal 
+            onClose={() => setShowCreateGroupModal(false)} 
+            onCreateGroup={handleCreateGroup}
+          />
         )}
         {showAddFriendModal && (
-          <AddFriendModal onClose={() => setShowAddFriendModal(false)} />
+          <AddFriendModal 
+            onClose={() => setShowAddFriendModal(false)} 
+            onAddFriend={handleAddFriendToList}
+          />
         )}
       </div>
     </div>
