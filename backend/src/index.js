@@ -46,14 +46,22 @@ app.use((err, _req, res, _next) => {
   res.status(status).json({ message: err.message || 'Server error' })
 })
 
-const server = http.createServer(app)
-const io = new Server(server, {
-  cors: { origin: allowedOrigins.length === 1 ? allowedOrigins[0] : allowedOrigins, credentials: true },
-})
-ioRef = io
-registerSocket(io)
+// Only start server if not in Vercel environment
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  const server = http.createServer(app)
+  const io = new Server(server, {
+    cors: { origin: allowedOrigins.length === 1 ? allowedOrigins[0] : allowedOrigins, credentials: true },
+  })
+  ioRef = io
+  registerSocket(io)
 
-server.listen(port, () => {
-  console.log(`API listening on http://localhost:${port}`)
-})
+  server.listen(port, () => {
+    console.log(`API listening on http://localhost:${port}`)
+  })
+} else {
+  // For Vercel, we'll handle Socket.IO differently
+  console.log('Running in Vercel environment')
+}
+
+module.exports = app
 
