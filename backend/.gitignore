@@ -199,3 +199,6 @@ out/
 # Config files (if they contain sensitive data)
 config/local.js
 config/production.js
+
+.vercel
+.env*.local
