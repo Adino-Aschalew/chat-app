@@ -187,7 +187,7 @@ MIT License
 
 ## 👨‍💻 Author
 
-Your Name
+My Name
 GitHub: https://github.com/Adino-Aschalew
 
 ---
